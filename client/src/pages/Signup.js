@@ -2,7 +2,6 @@
 import React, { useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import validator from 'validator'
-import { regexPassword } from '../utils'
 import {
   Paper,
   Container,
@@ -44,6 +43,7 @@ const Signup = () => {
     fetchErrorMsg: '',
   })
 
+  //Used to handle input values when typing and also validates the input fields
   const handleChange = (fieldName) => (event) => {
     const currValue = event.target.value
     switch (fieldName) {
@@ -54,7 +54,12 @@ const Signup = () => {
         break
 
       case 'password':
-        regexPassword.test(currValue)
+        validator.isStrongPassword(
+            currValue, {
+                minLength: 8, minLowercase: 1,
+                minUppercase: 1, minNumbers: 1, minSymbols: 1
+            }
+        )
           ? setErrors({ ...errors, password: false })
           : setErrors({ ...errors, password: true })
         break
@@ -68,6 +73,7 @@ const Signup = () => {
     setValues({ ...values, [fieldName]: event.target.value })
   }
 
+  //Used to toggle between showing password or hiding password when typing
   const handleShowPassword = (showPasswordField) => {
     setValues({
       ...values,
@@ -75,6 +81,7 @@ const Signup = () => {
     })
   }
 
+  //Send updated & validated input values to api endpoint
   const handleSubmit = async (event) => {
     event.preventDefault()
 
@@ -187,14 +194,14 @@ const Signup = () => {
               />
 
               <FormHelperText error={errors.password}>
-                Password must be at least 8 characters, have one symbol, 1
+                Password must be at least 8 characters, have 1 symbol, 1
                 uppercase letter, 1 lowercase and 1 digit
               </FormHelperText>
             </FormControl>
 
             <FormControl variant='filled'>
               <InputLabel htmlFor='password-repeat-field'>
-                Repeat password
+                Confirm password
               </InputLabel>
               <FilledInput
                 id='password-repeat-field'
@@ -243,7 +250,7 @@ const Signup = () => {
             <Divider />
             <Typography paragraph align='center'>
               Already have an account?{' '}
-              <Link component={RouterLink} to='/'>
+              <Link component={RouterLink} to='/login'>
                 Login here
               </Link>
             </Typography>

@@ -34,13 +34,25 @@ const Home = () => {
               </Typography>
               <Button variant="contained" size="large" sx={[
                 {
+                mr: 2,
                 background: '#db7290',
                 '&:hover': {
-                    color: '#036264',
-                    backgroundColor: 'white',
+                    color: 'white',
+                    backgroundColor: 'black',
                 },
                 },]}>
-              <Link to="/overview" style={{ textDecoration: "none", color: "inherit" }}>Start Now</Link>
+              <Link to="/signup" style={{ textDecoration: "none", color: "inherit" }}>Sign Up</Link>
+              </Button>
+              <Button variant="contained" size="large" sx={[
+                {
+                background:  'white',
+                color: '#036264',
+                '&:hover': {
+                    color: 'white',
+                    backgroundColor: 'black',
+                },
+                },]}>
+              <Link to="/login" style={{ textDecoration: "none", color: "inherit" }}>Login</Link>
               </Button>
             </Grid>
         </Grid>
